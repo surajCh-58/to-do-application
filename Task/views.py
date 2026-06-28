@@ -26,6 +26,14 @@ def DeleteTask(request,pk):
     task.delete()
     return redirect("Task:alltask")
 @login_required
+@login_required
 def AllTask(request):
-    tasks=Task.objects.all()
-    return render(request,"AllTask.html",{'task':tasks})
+    tasks = Task.objects.filter(user=request.user)
+    context = {
+        'task': tasks,
+        'total': tasks.count(),
+        'completed': tasks.filter(status='c').count(),
+        'pending': tasks.filter(status='p').count(),
+        'in_progress': tasks.filter(status='I').count(),
+    }
+    return render(request, "AllTask.html", context)

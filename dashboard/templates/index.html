@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · TaskFlow{% endblock %}
+{% block topbar_title %}Dashboard{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+
+{% block content %}
+
+<!-- Greeting -->
+<div style="margin-bottom:28px">
+  <div class="page-title">Good day, {{ request.user.username }} 👋</div>
+  <div class="page-sub">Here's what's happening with your tasks today.</div>
+</div>
+
+<!-- Stats -->
+<div class="stats-grid" style="margin-bottom:28px">
+  <div class="stat-card accent">
+    <div class="stat-label">Total Tasks</div>
+    <div class="stat-value">{{ total }}</div>
+    <div class="stat-sub">All tasks</div>
+  </div>
+  <div class="stat-card green">
+    <div class="stat-label">Completed</div>
+    <div class="stat-value">{{ completed }}</div>
+    <div class="stat-sub">Done ✓</div>
+  </div>
+  <div class="stat-card amber">
+    <div class="stat-label">Pending</div>
+    <div class="stat-value">{{ pending }}</div>
+    <div class="stat-sub">Needs action</div>
+  </div>
+  <div class="stat-card" style="border-left:3px solid #6366F1">
+    <div class="stat-label">In Progress</div>
+    <div class="stat-value">{{ in_progress }}</div>
+    <div class="stat-sub">Active now</div>
+  </div>
+</div>
+
+<!-- Recent tasks -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">Recent Tasks</span>
+    <a href="{% url 'Task:alltask' %}" class="btn btn-ghost btn-sm">View all</a>
+  </div>
+  {% if recent %}
+  <table class="task-table">
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Status</th>
+        <th>Created</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in recent %}
+      <tr class="task-row">
+        <td><span class="task-name">{{ t.name }}</span></td>
+        <td>
+          {% if t.status == 'c' %}<span class="badge badge-completed">Completed</span>
+          {% elif t.status == 'p' %}<span class="badge badge-pending">Pending</span>
+          {% else %}<span class="badge badge-inprogress">In Progress</span>{% endif %}
+        </td>
+        <td><span class="task-date">{{ t.created_at }}</span></td>
+        <td>
+          <div class="flex gap-2">
+            <a href="{% url 'Task:edit' t.id %}" class="btn btn-ghost btn-sm">Edit</a>
+            <a href="{% url 'Task:delete' t.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Delete this task?')">Delete</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    </div>
+    <div class="empty-title">No tasks yet</div>
+    <div class="empty-desc">Create your first task to get started.</div>
+    <a href="{% url 'Task:addtask' %}" class="btn btn-primary">Add Task</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

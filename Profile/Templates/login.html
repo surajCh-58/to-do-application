@@ -1,22 +1,85 @@
-<html>
-    <head>
-        <title>Login</title>
-    </head>
-    <body>
-        <form method="POST">
-            {% csrf_token %}
-            {% if messages %}
-            {% for message in messages %}
-            {{message}}
-            {%endfor%}
-            {%endif%}
-            {% for field in form %}
-            <label>{{field.label}}</label>
-            {{field}}
-            {%endfor%}
-            <button type="submit">Login</button>
-         <p> Don't have an account ? <a href={% url "Profile:register" %}>Register Here</a></p>
-        </form>
-        
-    </body>
-    </html>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In · TaskFlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="auth-page">
+
+<div class="auth-card">
+  <div class="auth-card-header">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+        </svg>
+      </div>
+      <span class="auth-logo-name">TaskFlow</span>
+    </div>
+    <div class="auth-heading">Welcome back</div>
+    <div class="auth-sub">Sign in to manage your tasks</div>
+  </div>
+
+  <div class="auth-card-body">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="form-group">
+        <label class="form-label">{{ field.label }}</label>
+        {% if field.field.widget.input_type == 'password' %}
+        <div class="input-wrap">
+          {{ field }}
+          <button type="button" class="input-eye" onclick="togglePass(this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        {% else %}
+          {{ field }}
+        {% endif %}
+        {% if field.errors %}
+          {% for error in field.errors %}
+          <div class="form-error">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            {{ error }}
+          </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+      {% endfor %}
+
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px">
+        Sign In
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </form>
+
+    <div class="auth-footer-link">
+      Don't have an account? <a href="{% url 'Profile:register' %}">Create one</a>
+    </div>
+  </div>
+</div>
+
+<script>
+function togglePass(btn) {
+  const input = btn.previousElementSibling;
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+</script>
+</body>
+</html>

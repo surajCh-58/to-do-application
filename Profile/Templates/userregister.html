@@ -1,26 +1,107 @@
-<html>
-    <head>
-        <title>{% if instance.pk %}Edit{% else %}Insert {%endif%}</title>
-    </head>
-    <body>
-        <form method="POST">
-            {% csrf_token %}
-            {% for field in u_f %}
-            <label>{{field.label}}</label>
-            {{field}}
-            {% if field.errors %}
-            {{field.errors|striptags}}
-            {%endif%}
-            {% endfor %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if instance.pk %}Edit Profile{% else %}Create Account{% endif %} · TaskFlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="auth-page">
 
-            {% for field in p_f %}
-            <label>{{field.label}}</label>
-            {{field}}
-            {% if field.errors %}
-            {{field.errors}}
-            {%endif%}
-            {%endfor%}
-            <button type="submit">{% if instance.pk%}Update{%else%}create{%endif%}</button>
-        </form>   
-    </body>
-    </html>
+<div class="auth-card" style="max-width:500px">
+  <div class="auth-card-header">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+        </svg>
+      </div>
+      <span class="auth-logo-name">TaskFlow</span>
+    </div>
+    <div class="auth-heading">{% if instance.pk %}Edit your profile{% else %}Create your account{% endif %}</div>
+    <div class="auth-sub">{% if instance.pk %}Update your personal details{% else %}Join TaskFlow and stay organized{% endif %}</div>
+  </div>
+
+  <div class="auth-card-body">
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="divider" style="margin-top:0">Account Info</div>
+
+      {% for field in u_f %}
+      <div class="form-group">
+        <label class="form-label">{{ field.label }}</label>
+        {% if field.field.widget.input_type == 'password' %}
+        <div class="input-wrap">
+          {{ field }}
+          <button type="button" class="input-eye" onclick="togglePass(this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        {% else %}
+          {{ field }}
+        {% endif %}
+        {% if field.errors %}
+          {% for error in field.errors %}
+          <div class="form-error">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            {{ error }}
+          </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+      {% endfor %}
+
+      <div class="divider">Profile Info</div>
+
+      {% for field in p_f %}
+      <div class="form-group">
+        <label class="form-label">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+          {% for error in field.errors %}
+          <div class="form-error">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            {{ error }}
+          </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+      {% endfor %}
+
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px">
+        {% if instance.pk %}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save Changes
+        {% else %}
+          Create Account
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        {% endif %}
+      </button>
+    </form>
+
+    {% if not instance.pk %}
+    <div class="auth-footer-link">
+      Already have an account? <a href="{% url 'Profile:login' %}">Sign in</a>
+    </div>
+    {% else %}
+    <div class="auth-footer-link" style="margin-top:12px">
+      <a href="{% url 'Task:alltask' %}">← Back to tasks</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+function togglePass(btn) {
+  const input = btn.previousElementSibling;
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+</script>
+</body>
+</html>
