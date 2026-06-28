@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <form method="POST">
+            {% csrf_token %}
+            {% if messages %}
+            {% for message in messages %}
+            {{message}}
+            {%endfor%}
+            {%endif%}
+            {% for field in form %}
+            <label>{{field.label}}</label>
+            {{field}}
+            {%endfor%}
+            <button type="submit">Login</button>
+         <p> Don't have an account ? <a href={% url "Profile:register" %}>Register Here</a></p>
+        </form>
+        
+    </body>
+    </html>

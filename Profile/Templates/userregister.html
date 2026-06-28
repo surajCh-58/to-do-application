@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>{% if instance.pk %}Edit{% else %}Insert {%endif%}</title>
+    </head>
+    <body>
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in u_f %}
+            <label>{{field.label}}</label>
+            {{field}}
+            {% if field.errors %}
+            {{field.errors|striptags}}
+            {%endif%}
+            {% endfor %}
+
+            {% for field in p_f %}
+            <label>{{field.label}}</label>
+            {{field}}
+            {% if field.errors %}
+            {{field.errors}}
+            {%endif%}
+            {%endfor%}
+            <button type="submit">{% if instance.pk%}Update{%else%}create{%endif%}</button>
+        </form>   
+    </body>
+    </html>
