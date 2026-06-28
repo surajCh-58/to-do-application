@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>{% if instance.pk %}Update{%else%}create{%endif%}</title>
+    </head>
+    <body>
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <label>{{field.label}}</label>
+            {{field}}
+            {%if field.errors%}
+            {{field.errors}}
+            {%endif%}
+            {%endfor%}
+            <button type="submit">{%if intance.pk%}update{%else%}create{%endif%}</button>
+        </form>
+        </body>
+        </html>
+    </head>

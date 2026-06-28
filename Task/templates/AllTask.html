@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>AllTask</title>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <th>Task Name</th>
+                <th>Status</th>
+                <th>Creation Date</th>
+                <th>Action</th>
+            </tr>
+            {% for task in task  %}
+            <tr>
+                <td>{{task.name}}</td>
+                <td>{{task.status}}</td>
+                <td>{{task.created_date}}</td>
+                <td>
+                    <a href={% url "Task:edit" task.id%}>Edit</a>
+                    <a href={% url "Task:delete" task.id %}>Delete</a>
+                </td>
+            </tr>
+            {%endfor%}
+        </table>
+    </body>
+    </html>
