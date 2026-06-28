@@ -11,12 +11,14 @@
 </head>
 <body>
 
-<!-- Sidebar -->
+<!-- ─── Sidebar ──────────────────────────────────────────────────────────── -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-brand">
     <div class="brand-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 11l3 3L22 4"/>
+        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
       </svg>
     </div>
     <span class="brand-name">TaskFlow</span>
@@ -25,20 +27,28 @@
   <div class="sidebar-section">
     <div class="sidebar-label">Menu</div>
     <a href="{% url 'Profile:dashboard' %}" class="nav-item {% block nav_dashboard %}{% endblock %}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
       </svg>
       Dashboard
     </a>
     <a href="{% url 'Task:alltask' %}" class="nav-item {% block nav_tasks %}{% endblock %}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
+        <line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/>
+        <line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
       </svg>
       All Tasks
     </a>
     <a href="{% url 'Task:addtask' %}" class="nav-item {% block nav_add %}{% endblock %}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="16"/>
+        <line x1="8" y1="12" x2="16" y2="12"/>
       </svg>
       Add Task
     </a>
@@ -47,9 +57,13 @@
   <div class="sidebar-footer">
     {% if request.user.is_authenticated %}
       <div class="sidebar-label" style="padding:0 4px;margin-bottom:6px">Account</div>
-      <a href="{% url 'Profile:edit' request.user.pk %}" class="nav-item {% block nav_profile %}{% endblock %}" style="margin-bottom:8px">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+      <a href="{% url 'Profile:edit' request.user.pk %}"
+         class="nav-item {% block nav_profile %}{% endblock %}"
+         style="margin-bottom:8px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
         </svg>
         Edit Profile
       </a>
@@ -72,28 +86,31 @@
   </div>
 </aside>
 
-<!-- Main -->
+<!-- ─── Main wrapper ──────────────────────────────────────────────────────── -->
 <div class="main">
-  <header class="topbar">
-    <div>
-      <div class="topbar-title">{% block topbar_title %}Dashboard{% endblock %}</div>
-    </div>
-    <div class="topbar-actions">
-      <a href="{% url 'Task:addtask' %}" class="btn btn-primary btn-sm">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        New Task
-      </a>
-    </div>
-  </header>
+
+  <!-- Header (topbar) pulled from header.html -->
+  {% include "header.html" %}
 
   <div class="content">
+    <!-- Flash messages -->
     {% if messages %}
       {% for message in messages %}
-        <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}" style="margin-bottom:20px">
+        <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}"
+             style="margin-bottom:20px">
           {% if message.tags == 'error' %}
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" style="flex-shrink:0;margin-top:1px">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
           {% else %}
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" style="flex-shrink:0;margin-top:1px">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
           {% endif %}
           {{ message }}
         </div>
@@ -102,13 +119,66 @@
 
     {% block content %}{% endblock %}
   </div>
+
+  <!-- Footer pulled from footer.html -->
+  {% include "footer.html" %}
+
+</div><!-- /.main -->
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     DELETE CONFIRMATION MODAL
+     Triggered by openDeleteModal(url, taskName) in AllTask.html
+════════════════════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <div class="modal-icon">🗑️</div>
+    <h3 id="modalTitle">Delete Task?</h3>
+    <p>
+      You are about to delete
+      <strong id="deleteTaskName"></strong>.
+      <br>This action cannot be undone.
+    </p>
+    <div class="modal-actions">
+      <button onclick="closeDeleteModal()" class="btn btn-ghost">Cancel</button>
+      <a id="deleteConfirmBtn" href="#" class="btn btn-danger">Yes, Delete</a>
+    </div>
+  </div>
 </div>
 
+<!-- ─── Scripts ───────────────────────────────────────────────────────────── -->
 <script>
-  // Mobile sidebar toggle
-  const sidebar = document.getElementById('sidebar');
-  document.addEventListener('keydown', e => { if (e.key === 'Escape')
-   sidebar.classList.remove('open'); });
+  /* ── Sidebar mobile toggle ── */
+  const sidebar  = document.getElementById('sidebar');
+  const toggler  = document.getElementById('sidebarToggle');
+  if (toggler) {
+    toggler.addEventListener('click', () => sidebar.classList.toggle('open'));
+  }
+
+  /* ── Delete modal ── */
+  const deleteModal = document.getElementById('deleteModal');
+
+  function openDeleteModal(deleteUrl, taskName) {
+    document.getElementById('deleteTaskName').textContent = taskName;
+    document.getElementById('deleteConfirmBtn').href = deleteUrl;
+    deleteModal.style.display = 'flex';   // .modal-overlay uses display:flex when visible
+  }
+
+  function closeDeleteModal() {
+    deleteModal.style.display = 'none';
+  }
+
+  // Close on backdrop click
+  deleteModal.addEventListener('click', function (e) {
+    if (e.target === this) closeDeleteModal();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      sidebar.classList.remove('open');
+      closeDeleteModal();
+    }
+  });
 </script>
 </body>
 </html>
