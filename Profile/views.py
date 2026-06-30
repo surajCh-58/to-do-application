@@ -30,7 +30,7 @@ def RegisterView(request, pk=None):
                 return redirect("Task:alltask")
             else:
                 messages.success(request, "Profile updated successfully.")
-                return redirect("Profile:dashboard", pk=user.pk)
+                return redirect("Profile:dashboard")
     else:
         user_form = UserRegistrationForm(instance=instance_user)
         profile_form = ProfileRegistrationForm(instance=instance_profile)
